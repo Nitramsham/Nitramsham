@@ -1,0 +1,31 @@
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+# Set up the email server
+server = smtplib.SMTP('smtp.gmail.com', 587)
+server.starttls()
+server.login("your_email@gmail.com", "your_password")
+
+# Prompt the user to input their name and email address
+name = input("Enter your name: ")
+email = input("Enter your email address: ")
+
+# Set up the email message
+msg = MIMEMultipart()
+msg['From'] = "your_email@gmail.com"
+msg['To'] = email
+msg['Subject'] = "Welcome to our website!"
+
+# Add the welcome message to the email
+body = "Hello " + name + ",\n\nWelcome to our website! Check your email for more information.\n\nBest regards,\nThe Team"
+msg.attach(MIMEText(body, 'plain'))
+
+# Send the email
+server.sendmail("your_email@gmail.com", email, msg.as_string())
+
+# Display a success message
+print("A welcome email has been sent to " + email + ". Check your email for more information.")
+
+# Close the email server
+server.quit()
